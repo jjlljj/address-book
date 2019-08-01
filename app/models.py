@@ -6,4 +6,4 @@ class Address(db.Model):
     last_name = db.Column(db.String(64), index=true)
 
     def __repr__(self):
-        return <Address {}>.format(self.username)
+        return <Address {}>.format(self.first_name)
