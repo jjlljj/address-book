@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div>
+    <h1>Addresses:</h1>
+
+      {% for address in addresses %}
+      <p>{{address.first_name}} {{ address.last_name }}</p>
+      <p>{{address.address}} {{ address.city }}, {{ address.state }}</p>
+      <p>{{ address.zip_code }}</p>
+      {% endfor %}
+
+  </div>
+
+{% endblock %}
