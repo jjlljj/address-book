@@ -2,13 +2,17 @@
 
 {% block content %}
 
-  <div>
+  <div style="background-color: #f2f2f2;">
     <h1>Addresses:</h1>
+    <a href="/address_book/new">Add A New Address</a>
 
       {% for address in addresses %}
-      <p>{{address.first_name}} {{ address.last_name }}</p>
-      <p>{{address.address}} {{ address.city }}, {{ address.state }}</p>
-      <p>{{ address.zip_code }}</p>
+      <div style="background-color: #ffffff; margin: 10px;">
+        <a href="/address_book/edit/{{ address.id }}">edit</a>
+        <p>{{address.first_name}} {{ address.last_name }}</p>
+        <p>{{address.address}} {{ address.city }}, {{ address.state }}</p>
+        <p>{{ address.zip_code }}</p>
+      </div>
       {% endfor %}
 
   </div>
