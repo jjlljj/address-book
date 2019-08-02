@@ -2,19 +2,52 @@
 
 {% block content %}
 
-  <div style="background-color: #f2f2f2;">
-    <h1>Addresses:</h1>
-    <a href="/address_book/new">Add A New Address</a>
+<div style="background-color: #f2f2f2;">
+  <h1>Addresses:</h1>
+  <a href="/address_book/new">Add A New Address</a>
 
-      {% for address in addresses %}
-      <div style="background-color: #ffffff; margin: 10px;">
-        <a href="/address_book/edit/{{ address.id }}">edit</a>
-        <p>{{address.first_name}} {{ address.last_name }}</p>
-        <p>{{address.address}} {{ address.city }}, {{ address.state }}</p>
-        <p>{{ address.zip_code }}</p>
-      </div>
-      {% endfor %}
+    {% for address in addresses %}
+    <div id="address-{{ address.id }}" style="background-color: #ffffff; margin: 10px;">
+      <a href="/address_book/edit/{{ address.id }}">edit</a>
+      <button type="button" data-id="{{ address.id }}" onclick="handleDeleteAddress(event)">delete</button>
+      <p>{{address.first_name}} {{ address.last_name }}</p>
+      <p>{{address.address}} {{ address.city }}, {{ address.state }}</p>
+      <p>{{ address.zip_code }}</p>
+    </div>
+    {% endfor %}
 
-  </div>
+</div>
+
+<script>
+  console.log('js works')
+
+  const something = 'yoyoyoy';
+
+  const handleDeleteAddress = async e => {
+    e.preventDefault();
+    const { target } = e;
+    const address_id = target.getAttribute('data-id');
+
+    try {
+      const response = await fetch(`api/address_book/edit/${address_id}`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+      });
+
+      const result = await response.json();
+
+      console.log({ result })
+      if (result.success === true) {
+        const addressElement = document.querySelector(`#address-${address_id}`);
+        console.log({ addressElement })
+        addressElement.remove();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+</script>
 
 {% endblock %}
+
+
