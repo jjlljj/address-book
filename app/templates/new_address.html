@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<h3>Add A New Address</h3>
+
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+    {{ form.first_name.label }}<br>
+    {{ form.first_name(size=32) }}
+    </p>
+    <p>
+    {{ form.last_name.label }}<br>
+    {{ form.last_name(size=32) }}
+    </p>
+
+    <p>{{ form.submit() }}</p>
+<p>!!!!</p>
+
+
+{% endblock %}
