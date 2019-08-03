@@ -1,0 +1,133 @@
+body {
+  background: #f2f2f2;
+  min-height: 100vh;
+}
+
+body * {
+  font-family: 'Roboto', sans-serif;
+  color: #353535;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+a {
+  color: #4581b7;
+}
+
+
+/* dark blue*/
+/*#004371*/
+
+/* gray brown*/
+/*#353535*/
+
+/* light gray brown*/
+/*#707077*/
+
+h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 10px;
+  text-align: center;
+}
+
+p {
+  font-size: 14px;
+  margin: 10px;
+}
+
+input {
+  background: #f2f2f2;
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 10px 20px;
+}
+
+.site-header {
+  min-height: 60px;
+  background:#004371;
+}
+
+.nav-link {
+  display: block;
+  color: #707077;
+  margin: 10px 20px;
+}
+
+.nav-link:hover,
+.nav-link:hover i {
+  color: #4581b7;
+}
+
+.address-card {
+  background: #ffffff;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 400px;
+  padding: 10px;
+  position: relative;
+}
+
+.card-button {
+  display: block;
+  font-size: 16px;
+  position: absolute;
+  right: 10;
+  color: #707077
+}
+
+.edit-button {
+  top: 10;
+}
+
+.edit-button i:hover {
+  color: #24c200;
+}
+
+.delete-button {
+  bottom: 10;
+  padding: 3px;
+}
+
+.delete-button i:hover {
+  color: #ff1a1a;
+ }
+
+.form-row {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+.submit-button {
+  background: #004371;
+  border-radius: 10px;
+  color: #ffffff;
+  display: block;
+  font-size: 14px;
+  margin: 10px auto;
+  padding: 10px 30px;
+}
+
+.submit-button:hover {
+  background: #0062a6;
+}
+
+#add-address-button {
+  color: #707077;
+  display: block;
+  margin: 20px 10px 10px auto;
+  width: 200px;
+}
+
+#add-address-button:hover,
+#add-address-button:hover i {
+  color: #0062a6;
+}
