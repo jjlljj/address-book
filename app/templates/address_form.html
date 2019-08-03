@@ -7,33 +7,33 @@
 
 <form id="address-form" action="" method="post" novalidate onsubmit="validateAddress(event)">
     {{ form.hidden_tag() }}
-    <p>
-    {{ form.first_name.label }}<br>
+    <div class="form-row">
+    {{ form.first_name.label }}
     {{ form.first_name(size=32) }}
-    </p>
-    <p>
-    {{ form.last_name.label }}<br>
+    </div>
+    <div class="form-row">
+    {{ form.last_name.label }}
     {{ form.last_name(size=32) }}
-    </p>
-    <p>
-    {{ form.address.label }}<br>
+    </div>
+    <div class="form-row">
+    {{ form.address.label }}
     {{ form.address(size=32) }}
-    </p>
-    <p>
-    {{ form.city.label }}<br>
+    </div>
+    <div class="form-row">
+    {{ form.city.label }}
     {{ form.city(size=32) }}
-    </p>
-    <p>
-    {{ form.state.label }}<br>
+    </div>
+    <div class="form-row">
+    {{ form.state.label }}
     {{ form.state(size=32) }}
-    </p>
-    <p>
-    {{ form.zip_code.label }}<br>
+    </div>
+    <div class="form-row">
+    {{ form.zip_code.label }}
     {{ form.zip_code(size=32) }}
-    </p>
+    </div>
 
     <!--<p>{{ form.submit() }}</p>-->
-    <button type="submit" >Save</button>
+    <button type="submit" class="submit-button">Save</button>
 </form>
 
 <script>
