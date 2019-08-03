@@ -32,17 +32,19 @@
     {{ form.zip_code(size=32) }}
     </p>
 
-    <p>{{ form.submit() }}</p>
+    <!--<p>{{ form.submit() }}</p>-->
+    <button type="submit" onclick="validateAddress(event)">Save</button>
 </form>
 
 <script>
 
 const validateAddress = e => {
   e.preventDefault();
-  const userAddress = '8 Wildwood Drive';
-  const userCity = 'Old Lyme';
-  const userState = 'CT';
-  const userZip = '06371';
+
+  const userAddress = document.querySelector('#address').value;
+  const userCity = document.querySelector('#city').value;
+  const userState = document.querySelector('#state').value;
+  const userZip = document.querySelector('#zip_code').value;
 
   // pull apiId into py env variable
   const apiId = '449SELF06473';
@@ -51,14 +53,15 @@ const validateAddress = e => {
 
 
   fetch(url).then(response => {
-    console.log({ response })
-
     return response.text()
   }).then(( str ) => {
     let responseDoc = new DOMParser().parseFromString(str, 'application/xml');
 
     // handle errors
-    if (!responseDoc.getElementsByTagName('Error').length) {
+    if (responseDoc.getElementsByTagName('Error').length) {
+      console.log( 'invalid address')
+    } else {
+      console.log( 'valid address!!!!')
       const address = responseDoc.getElementsByTagName('Address2')[0].textContent;
       const city = responseDoc.getElementsByTagName('City')[0].textContent;
       const state = responseDoc.getElementsByTagName('State')[0].textContent;
