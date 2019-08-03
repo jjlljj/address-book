@@ -5,7 +5,7 @@
 
 <h3>{{ form_title }}</h3>
 
-<form action="" method="post" novalidate>
+<form id="address-form" action="" method="post" novalidate onsubmit="validateAddress(event)">
     {{ form.hidden_tag() }}
     <p>
     {{ form.first_name.label }}<br>
@@ -32,8 +32,67 @@
     {{ form.zip_code(size=32) }}
     </p>
 
-    <p>{{ form.submit() }}</p>
-<p>!!!!</p>
+    <!--<p>{{ form.submit() }}</p>-->
+    <button type="submit" >Save</button>
+</form>
 
+<script>
+
+const validateAddress = e => {
+  e.preventDefault();
+
+  const addressFormRef = document.querySelector('#address-form');
+
+  const userAddressRef = document.querySelector('#address');
+  const userCityRef = document.querySelector('#city');
+  const userStateRef = document.querySelector('#state');
+  const userZipRef = document.querySelector('#zip_code');
+
+  const userAddress = userAddressRef.value;
+  const userCity = userCityRef.value;
+  const userState = userStateRef.value;
+  const userZip = userZipRef.value;
+
+  // pull apiId into py env variable
+  const apiId = '449SELF06473';
+
+  const url = `https://secure.shippingapis.com/shippingapi.dll?API=ZipCodeLookup&XML=<ZipCodeLookupRequest USERID="${apiId}"><Address ID="0"><Address1></Address1><Address2>${userAddress}</Address2><City>${userCity}</City><State>${userState}</State><Zip5>${userZip}</Zip5><Zip4></Zip4></Address></ZipCodeLookupRequest>`;
+
+
+  fetch(url).then(response => {
+    return response.text()
+  }).then(( str ) => {
+    let responseDoc = new DOMParser().parseFromString(str, 'application/xml');
+
+    // handle errors
+    if (responseDoc.getElementsByTagName('Error').length) {
+
+      console.log( 'invalid address')
+
+    } else {
+
+      console.log( 'valid address!!!!')
+      const address = responseDoc.getElementsByTagName('Address2')[0].textContent;
+      const city = responseDoc.getElementsByTagName('City')[0].textContent;
+      const state = responseDoc.getElementsByTagName('State')[0].textContent;
+      const zip5 = responseDoc.getElementsByTagName('Zip5')[0].textContent;
+      const zip4 = responseDoc.getElementsByTagName('Zip4')[0].textContent;
+
+      userAddressRef.value = address;
+      userCityRef.value = city;
+      userStateRef.value = state;
+      userZipRef.value = `${zip5}-${zip4}`;
+
+      console.log('submit');
+      addressFormRef.submit();
+    }
+  })
+  .catch(err => console.log(err))
+}
+
+
+//validateAddress({preventDefault: () => true})
+
+</script>
 
 {% endblock %}

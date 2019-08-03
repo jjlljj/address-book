@@ -22,10 +22,10 @@ def add_address():
     if form.validate_on_submit():
 
         address = Address(
-            first_name = form.first_name.data,
-            last_name = form.last_name.data,
-            address = form.address.data,
-            city = form.city.data,
+            first_name = form.first_name.data.title(),
+            last_name = form.last_name.data.title(),
+            address = form.address.data.title(),
+            city = form.city.data.title(),
             state = form.state.data,
             zip_code = form.zip_code.data,
         )
@@ -45,11 +45,11 @@ def edit_address(address_id):
     form=AddressForm()
 
     if form.validate_on_submit():
-        address.first_name = form.first_name.data 
-        address.last_name = form.last_name.data 
-        address.address = form.address.data 
-        address.city = form.city.data 
-        address.state = form.state.data 
+        address.first_name = form.first_name.data.title()
+        address.last_name = form.last_name.data.title()
+        address.address = form.address.data.title()
+        address.city = form.city.data.title() 
+        address.state = form.state.data
         address.zip_code = form.zip_code.data 
 
         db.session.commit()
