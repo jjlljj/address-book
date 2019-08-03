@@ -5,7 +5,7 @@
 
 <h3>{{ form_title }}</h3>
 
-<form action="" method="post" novalidate>
+<form id="address-form" action="" method="post" novalidate onsubmit="validateAddress(event)">
     {{ form.hidden_tag() }}
     <p>
     {{ form.first_name.label }}<br>
@@ -33,7 +33,7 @@
     </p>
 
     <!--<p>{{ form.submit() }}</p>-->
-    <button type="submit" onclick="validateAddress(event)">Save</button>
+    <button type="submit" >Save</button>
 </form>
 
 <script>
@@ -41,10 +41,17 @@
 const validateAddress = e => {
   e.preventDefault();
 
-  const userAddress = document.querySelector('#address').value;
-  const userCity = document.querySelector('#city').value;
-  const userState = document.querySelector('#state').value;
-  const userZip = document.querySelector('#zip_code').value;
+  const addressFormRef = document.querySelector('#address-form');
+
+  const userAddressRef = document.querySelector('#address');
+  const userCityRef = document.querySelector('#city');
+  const userStateRef = document.querySelector('#state');
+  const userZipRef = document.querySelector('#zip_code');
+
+  const userAddress = userAddressRef.value;
+  const userCity = userCityRef.value;
+  const userState = userStateRef.value;
+  const userZip = userZipRef.value;
 
   // pull apiId into py env variable
   const apiId = '449SELF06473';
@@ -59,8 +66,11 @@ const validateAddress = e => {
 
     // handle errors
     if (responseDoc.getElementsByTagName('Error').length) {
+
       console.log( 'invalid address')
+
     } else {
+
       console.log( 'valid address!!!!')
       const address = responseDoc.getElementsByTagName('Address2')[0].textContent;
       const city = responseDoc.getElementsByTagName('City')[0].textContent;
@@ -68,7 +78,13 @@ const validateAddress = e => {
       const zip5 = responseDoc.getElementsByTagName('Zip5')[0].textContent;
       const zip4 = responseDoc.getElementsByTagName('Zip4')[0].textContent;
 
-      console.log({ address, city, state, zip5, zip4 })
+      userAddressRef.value = address;
+      userCityRef.value = city;
+      userStateRef.value = state;
+      userZipRef.value = `${zip5}-${zip4}`;
+
+      console.log('submit');
+      addressFormRef.submit();
     }
   })
   .catch(err => console.log(err))
