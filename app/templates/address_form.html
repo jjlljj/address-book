@@ -33,7 +33,47 @@
     </p>
 
     <p>{{ form.submit() }}</p>
-<p>!!!!</p>
+</form>
 
+<script>
+
+const validateAddress = e => {
+  e.preventDefault();
+  const userAddress = '8 Wildwood Drive';
+  const userCity = 'Old Lyme';
+  const userState = 'CT';
+  const userZip = '06371';
+
+  // pull apiId into py env variable
+  const apiId = '449SELF06473';
+
+  const url = `https://secure.shippingapis.com/shippingapi.dll?API=ZipCodeLookup&XML=<ZipCodeLookupRequest USERID="${apiId}"><Address ID="0"><Address1></Address1><Address2>${userAddress}</Address2><City>${userCity}</City><State>${userState}</State><Zip5>${userZip}</Zip5><Zip4></Zip4></Address></ZipCodeLookupRequest>`;
+
+
+  fetch(url).then(response => {
+    console.log({ response })
+
+    return response.text()
+  }).then(( str ) => {
+    let responseDoc = new DOMParser().parseFromString(str, 'application/xml');
+
+    // handle errors
+    if (!responseDoc.getElementsByTagName('Error').length) {
+      const address = responseDoc.getElementsByTagName('Address2')[0].textContent;
+      const city = responseDoc.getElementsByTagName('City')[0].textContent;
+      const state = responseDoc.getElementsByTagName('State')[0].textContent;
+      const zip5 = responseDoc.getElementsByTagName('Zip5')[0].textContent;
+      const zip4 = responseDoc.getElementsByTagName('Zip4')[0].textContent;
+
+      console.log({ address, city, state, zip5, zip4 })
+    }
+  })
+  .catch(err => console.log(err))
+}
+
+
+//validateAddress({preventDefault: () => true})
+
+</script>
 
 {% endblock %}
