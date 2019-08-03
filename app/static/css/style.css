@@ -44,6 +44,15 @@ input {
   padding: 10px 20px;
 }
 
+.submit-button:hover {
+  background: #0062a6;
+}
+
+.form-container {
+  max-width: 600px;
+  background: #ffffff;
+}
+
 .form-row {
   display: flex;
   justify-content: space-between;
