@@ -4,7 +4,7 @@
 
 <a href="{{ url_for("address_book") }}" class="nav-link">< Back</a>
 
-<div class="form-container" >
+<div class="address-card" >
   <h3>{{ form_title }}</h3>
   <form id="address-form" action="" method="post" novalidate onsubmit="validateAddress(event)">
     {{ form.hidden_tag() }}

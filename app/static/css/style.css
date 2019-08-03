@@ -54,16 +54,42 @@ input {
 
 .nav-link {
   display: block;
-  margin: 10px;
+  margin: 10px 20px;
 }
 
-.form-container {
+.address-card {
   background: #ffffff;
   border-radius: 10px;
   margin: 20px auto;
   max-width: 400px;
   padding: 10px;
+  position: relative;
 }
+
+.card-button {
+  display: block;
+  font-size: 16px;
+  position: absolute;
+  right: 10;
+  color: #707077
+}
+
+.edit-button {
+  top: 10;
+}
+
+.edit-button i:hover {
+  color: #24c200;
+}
+
+.delete-button {
+  bottom: 10;
+  padding: 3px;
+}
+
+.delete-button i:hover {
+  color: #ff1a1a;
+ }
 
 .form-row {
   align-items: center;
