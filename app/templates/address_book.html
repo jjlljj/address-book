@@ -2,25 +2,23 @@
 
 {% block content %}
 
-<div style="background-color: #f2f2f2;">
+<div>
   <h1>Addresses:</h1>
   <a href="/address_book/new">Add A New Address</a>
 
     {% for address in addresses %}
-    <div id="address-{{ address.id }}" style="background-color: #ffffff; margin: 10px;">
+    <div id="address-{{ address.id }}">
       <a href="/address_book/edit/{{ address.id }}">edit</a>
-      <button type="button" data-id="{{ address.id }}" onclick="handleDeleteAddress(event)">delete</button>
+      <button type="button" data-id="{{ address.id }}" onclick="deleteAddress(event)">delete</button>
       <p>{{address.first_name}} {{ address.last_name }}</p>
       <p>{{address.address}} {{ address.city }}, {{ address.state }}</p>
       <p>{{ address.zip_code }}</p>
     </div>
     {% endfor %}
-
 </div>
 
 <script>
-
-  const handleDeleteAddress = async e => {
+  const deleteAddress = async e => {
     e.preventDefault();
     const { target } = e;
     const address_id = target.getAttribute('data-id');
@@ -43,7 +41,6 @@
       }
     }
   }
-
 </script>
 
 {% endblock %}

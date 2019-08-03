@@ -1,6 +1,6 @@
 body * {
   font-family: 'Roboto', sans-serif;
-  color: #212121;
+  color: ##353535;
 }
 
 h1 {
@@ -10,4 +10,18 @@ h1 {
 h2 {
   font-size: 30px;
 }
+
+a {
+  color: #4581b7;
+}
+
+/* dark blue*/
+/*#004371*/
+
+/* gray brown*/
+/*#353535*/
+
+/* light gray brown*/
+/*#707077*/
+
 

@@ -50,6 +50,12 @@ table {
 /* reset button styling outlines */
 button, input, textarea {
   outline: none;
+  border: none;
+  border-width: 0;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 /* reset link styling */
@@ -63,3 +69,4 @@ a:visited {
 a:active {
   color: #3D3D3D;
 }
+
