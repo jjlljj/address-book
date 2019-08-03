@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, jsonify, request
 from app import app, db
 from app.models import Address
 from app.forms import AddressForm
@@ -65,5 +65,28 @@ def edit_address(address_id):
     form.state.data = address.state
     form.zip_code.data = address.zip_code
 
-    return render_template('address_form.html', form=form, form_title="Edit Address")
+    return render_template(
+        'address_form.html', 
+        form=form, 
+        form_title="Edit Address", 
+    )
+
+
+@app.route('/api/address_book/edit/<address_id>', methods=['DELETE'])
+def delete_address(address_id):
+    address = Address.query.get(address_id)
+
+    if request.method == 'DELETE':
+        db.session.delete(address)
+        db.session.commit()
+
+        return jsonify(
+            deleted=True,
+            success=True
+        )
+
+
+
+
+
 
