@@ -65,7 +65,11 @@ def edit_address(address_id):
     form.state.data = address.state
     form.zip_code.data = address.zip_code
 
-    return render_template('address_form.html', form=form, form_title="Edit Address")
+    return render_template(
+        'address_form.html', 
+        form=form, 
+        form_title="Edit Address", 
+    )
 
 
 @app.route('/api/address_book/edit/<address_id>', methods=['DELETE'])
