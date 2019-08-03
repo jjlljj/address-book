@@ -5,6 +5,7 @@
         {% else %}
         <title>Address Book</title>
         {% endif %}
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/reset.css') }}">
     </head>
     <body>
       {% block content %}
