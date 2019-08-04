@@ -45,8 +45,9 @@ def register():
 @app.route('/address_book', methods=['GET'])
 @login_required
 def address_book():
-    addresses = Address.query.all()
-    return render_template('address_book.html', addresses=addresses)
+    # addresses = Address.query.all()
+    addresses = Address.query.filter_by(user_id=current_user.id)
+    return render_template('address_book.html', addresses=addresses, page_title=current_user.username+"'s Address Book")
 
 
 @app.route('/address_book/new', methods=['GET', 'POST'])
@@ -62,6 +63,7 @@ def add_address():
             city = form.city.data.title(),
             state = form.state.data,
             zip_code = form.zip_code.data,
+            user_id = current_user.id
         )
 
         db.session.add(address)

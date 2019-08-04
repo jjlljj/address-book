@@ -17,11 +17,8 @@ h1 {
 }
 
 h2 {
-  font-size: 30px;
-}
-
-a {
-  color: #4581b7;
+  font-size: 24px;
+  color: #ffffff
 }
 
 h3 {
@@ -36,6 +33,10 @@ p {
   margin: 10px;
 }
 
+a {
+  color: #4581b7;
+}
+
 input {
   background: #f2f2f2;
   border-radius: 10px;
@@ -48,6 +49,9 @@ input {
 .site-header {
   min-height: 60px;
   background:#004371;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav-link {
