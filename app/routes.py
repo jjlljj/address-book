@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, jsonify, request
 from app import app, db
 from app.models import Address, User
-from app.forms import AddressForm, LoginForm
+from app.forms import AddressForm, LoginForm, RegistrationForm
 from flask_login import current_user, login_user, logout_user, login_required
 
 @app.route('/', methods=['GET', 'POST'])
@@ -10,27 +10,37 @@ from flask_login import current_user, login_user, logout_user, login_required
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('address_book'))
-
     form = LoginForm()
-
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-
         if user is None or not user.check_password(form.password.data):
-            return redirect(url_for('login'))
-
+            login_error = 'User Not Found' if user is None else 'Incorrect Password'
+            return render_template('login_form.html', title='Sign In', form=form, login_error=login_error)
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('address_book')
         return redirect(next_page)
-
     return render_template('login_form.html', title='Sign In', form=form)
 
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('address_book'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        login_user(user, remember=False)
+        return redirect(url_for('address_book'))
+    return render_template('registration_form.html', title='Register', form=form)
 
 @app.route('/address_book', methods=['GET'])
 @login_required
