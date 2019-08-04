@@ -12,7 +12,7 @@
     <p>{{address.first_name}} {{ address.last_name }}</p>
     <p>{{address.address}} {{ address.city }}, {{ address.state }}</p>
     <p>{{ address.zip_code }}</p>
-    <button type="button" class="card-button delete-button" data-id="{{ address.id }}" onclick="deleteAddress(event)"><i class="fas fa-trash-alt delete-btn"></i></button>
+    <button type="button" class="card-button delete-button" data-id="{{ address.id }}" onclick="deleteAddress(event)"><i data-id="{{ address.id }}" class="fas fa-trash-alt delete-btn"></i></button>
   </div>
   {% endfor %}
 </div>
@@ -21,6 +21,8 @@
   const deleteAddress = async e => {
     e.preventDefault();
     const { target } = e;
+
+    console.log({ target })
     const address_id = target.getAttribute('data-id');
 
     if (window.confirm("Delete This Address?")) { 

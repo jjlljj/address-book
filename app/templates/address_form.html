@@ -39,60 +39,68 @@
 
 <script>
 
-const validateAddress = e => {
+
+const validateAddress = async e => {
   e.preventDefault();
-
   const addressFormRef = document.querySelector('#address-form');
-
-  const userAddressRef = document.querySelector('#address');
-  const userCityRef = document.querySelector('#city');
-  const userStateRef = document.querySelector('#state');
-  const userZipRef = document.querySelector('#zip_code');
-
-  const userAddress = userAddressRef.value;
-  const userCity = userCityRef.value;
-  const userState = userStateRef.value;
-  const userZip = userZipRef.value;
+  const contactIdsList = [ 'first_name', 'last_name' ];
+  const addressIdsList = [ 'address', 'city', 'state', 'zip_code' ]
+  const contactData = formatIdsWithNodeAndValue(contactIdsList);
+  const addressData = formatIdsWithNodeAndValue(addressIdsList);
 
   // pull apiId into py env variable
   const apiId = '449SELF06473';
+  const url = `https://secure.shippingapis.com/shippingapi.dll?API=ZipCodeLookup&XML=<ZipCodeLookupRequest USERID="${apiId}"><Address ID="0"><Address1></Address1><Address2>${addressData['address'].value}</Address2><City>${addressData['city'].value}</City><State>${addressData['state'].value}</State><Zip5>${addressData['zip_code'].value}</Zip5><Zip4></Zip4></Address></ZipCodeLookupRequest>`;
 
-  const url = `https://secure.shippingapis.com/shippingapi.dll?API=ZipCodeLookup&XML=<ZipCodeLookupRequest USERID="${apiId}"><Address ID="0"><Address1></Address1><Address2>${userAddress}</Address2><City>${userCity}</City><State>${userState}</State><Zip5>${userZip}</Zip5><Zip4></Zip4></Address></ZipCodeLookupRequest>`;
+  const responseDoc = await doFetchUrlXml(url);
 
+  if (responseDoc.getElementsByTagName('Error').length) {
+    renderError('Invalid Address.');
 
-  fetch(url).then(response => {
-    return response.text()
-  }).then(( str ) => {
-    let responseDoc = new DOMParser().parseFromString(str, 'application/xml');
+    console.log( 'Invalid address')
+  } else {
+    const addressValues = parseAddressValuesFromXml(responseDoc);
+    addressIdsList.forEach(id => addressData[id].ref.value = addressValues[id]);
 
-    // handle errors
-    if (responseDoc.getElementsByTagName('Error').length) {
-
-      console.log( 'invalid address')
-
-    } else {
-
-      console.log( 'valid address!!!!')
-      const address = responseDoc.getElementsByTagName('Address2')[0].textContent;
-      const city = responseDoc.getElementsByTagName('City')[0].textContent;
-      const state = responseDoc.getElementsByTagName('State')[0].textContent;
-      const zip5 = responseDoc.getElementsByTagName('Zip5')[0].textContent;
-      const zip4 = responseDoc.getElementsByTagName('Zip4')[0].textContent;
-
-      userAddressRef.value = address;
-      userCityRef.value = city;
-      userStateRef.value = state;
-      userZipRef.value = `${zip5}-${zip4}`;
-
-      console.log('submit');
-      addressFormRef.submit();
-    }
-  })
-  .catch(err => console.log(err))
+    addressFormRef.submit();
+  }
 }
 
+const doFetchUrlXml = async url => {
+  try {
+    const response = await fetch(url);
+    const string = await response.text();
+    const responseDoc = new DOMParser().parseFromString(string, 'application/xml');
 
-//validateAddress({preventDefault: () => true})
+    return responseDoc;
+  } catch (err) {
+
+    renderError('Something went wrong.');
+  }
+}
+
+const formatIdsWithNodeAndValue = ids => {
+  return ids.reduce((acc, id) => {
+    let ref = document.querySelector(`#${id}`);
+    let value = ref.value;
+    return {...acc, [id]: { ref, value }};
+  }, {});
+}
+
+const parseAddressValuesFromXml = responseDoc => {
+  const address = responseDoc.getElementsByTagName('Address2')[0].textContent;
+  const city = responseDoc.getElementsByTagName('City')[0].textContent;
+  const state = responseDoc.getElementsByTagName('State')[0].textContent;
+  const zip5 = responseDoc.getElementsByTagName('Zip5')[0].textContent;
+  const zip4 = responseDoc.getElementsByTagName('Zip4')[0].textContent;
+  const zip_code = `${zip5}-${zip4}`;
+
+  return { address, city, state, zip_code };
+}
+
+const renderError = errorText => {
+  alert(errorText);
+}
 
 </script>
 
