@@ -1,13 +1,16 @@
 from flask import render_template, flash, redirect, url_for, jsonify, request
 from app import app, db
 from app.models import Address
-from app.forms import AddressForm
+from app.forms import AddressForm, LoginForm
 
 @app.route('/')
 @app.route('/index')
 
 def index():
-    return "Hello Flask App"
+    form = LoginForm()
+    if form.validate_on_submit():
+      return redirect('/address_book')
+    return render_template('login_form.html', title='Sign In', form=form)
 
 @app.route('/address_book', methods=['GET'])
 

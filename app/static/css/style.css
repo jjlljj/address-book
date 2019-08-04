@@ -8,6 +8,10 @@ body * {
   color: #353535;
 }
 
+section {
+  margin: 10px;
+}
+
 h1 {
   font-size: 36px;
 }
