@@ -1,19 +1,31 @@
 from flask import render_template, flash, redirect, url_for, jsonify, request
 from app import app, db
-from app.models import Address
+from app.models import Address, User
 from app.forms import AddressForm, LoginForm
+from flask_login import current_user, login_user
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('address_book'))
 
-def index():
     form = LoginForm()
+
     if form.validate_on_submit():
-      return redirect('/address_book')
+        user = User.query.filter_by(username=form.username.data).first()
+
+        if user is None or not user.check_password(form.password.data):
+            return redirect(url_for('login'))
+
+        login_user(user, remember=form.remember_me.data)
+        return redirect('/address_book')
+
     return render_template('login_form.html', title='Sign In', form=form)
 
-@app.route('/address_book', methods=['GET'])
 
+@app.route('/address_book', methods=['GET'])
 def address_book():
     addresses = Address.query.all()
     return render_template('address_book.html', addresses=addresses)
@@ -36,8 +48,6 @@ def add_address():
         db.session.add(address)
         db.session.commit()
 
-        flash('New Address Added')
-
         return redirect(url_for('address_book'))
 
     return render_template('address_form.html', form=form, form_title='Add A New Address')
@@ -56,8 +66,6 @@ def edit_address(address_id):
         address.zip_code = form.zip_code.data 
 
         db.session.commit()
-
-        flash('Saved')
 
         return redirect(url_for('address_book'))
 
