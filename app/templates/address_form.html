@@ -6,6 +6,7 @@
 
 <div class="address-card" >
   <h3>{{ form_title }}</h3>
+  <p id="error-text" class="error"></p>
   <form id="address-form" action="" method="post" novalidate onsubmit="validateAddress(event)">
     {{ form.hidden_tag() }}
     <div class="form-row">
@@ -37,71 +38,6 @@
   </form>
 </div>
 
-<script>
-
-
-const validateAddress = async e => {
-  e.preventDefault();
-  const addressFormRef = document.querySelector('#address-form');
-  const contactIdsList = [ 'first_name', 'last_name' ];
-  const addressIdsList = [ 'address', 'city', 'state', 'zip_code' ]
-  const contactData = formatIdsWithNodeAndValue(contactIdsList);
-  const addressData = formatIdsWithNodeAndValue(addressIdsList);
-
-  // pull apiId into py env variable
-  const apiId = '449SELF06473';
-  const url = `https://secure.shippingapis.com/shippingapi.dll?API=ZipCodeLookup&XML=<ZipCodeLookupRequest USERID="${apiId}"><Address ID="0"><Address1></Address1><Address2>${addressData['address'].value}</Address2><City>${addressData['city'].value}</City><State>${addressData['state'].value}</State><Zip5>${addressData['zip_code'].value}</Zip5><Zip4></Zip4></Address></ZipCodeLookupRequest>`;
-
-  const responseDoc = await doFetchUrlXml(url);
-
-  if (responseDoc.getElementsByTagName('Error').length) {
-    renderError('Invalid Address.');
-
-    console.log( 'Invalid address')
-  } else {
-    const addressValues = parseAddressValuesFromXml(responseDoc);
-    addressIdsList.forEach(id => addressData[id].ref.value = addressValues[id]);
-
-    addressFormRef.submit();
-  }
-}
-
-const doFetchUrlXml = async url => {
-  try {
-    const response = await fetch(url);
-    const string = await response.text();
-    const responseDoc = new DOMParser().parseFromString(string, 'application/xml');
-
-    return responseDoc;
-  } catch (err) {
-
-    renderError('Something went wrong.');
-  }
-}
-
-const formatIdsWithNodeAndValue = ids => {
-  return ids.reduce((acc, id) => {
-    let ref = document.querySelector(`#${id}`);
-    let value = ref.value;
-    return {...acc, [id]: { ref, value }};
-  }, {});
-}
-
-const parseAddressValuesFromXml = responseDoc => {
-  const address = responseDoc.getElementsByTagName('Address2')[0].textContent;
-  const city = responseDoc.getElementsByTagName('City')[0].textContent;
-  const state = responseDoc.getElementsByTagName('State')[0].textContent;
-  const zip5 = responseDoc.getElementsByTagName('Zip5')[0].textContent;
-  const zip4 = responseDoc.getElementsByTagName('Zip4')[0].textContent;
-  const zip_code = `${zip5}-${zip4}`;
-
-  return { address, city, state, zip_code };
-}
-
-const renderError = errorText => {
-  alert(errorText);
-}
-
-</script>
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/address_form.js') }}"></script>
 
 {% endblock %}

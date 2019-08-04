@@ -20,16 +20,6 @@ a {
   color: #4581b7;
 }
 
-
-/* dark blue*/
-/*#004371*/
-
-/* gray brown*/
-/*#353535*/
-
-/* light gray brown*/
-/*#707077*/
-
 h3 {
   font-size: 22px;
   font-weight: 700;
@@ -45,7 +35,9 @@ p {
 input {
   background: #f2f2f2;
   border-radius: 10px;
+  box-sizing: border-box;
   font-size: 14px;
+  height: 40px;
   padding: 10px 20px;
 }
 
@@ -130,4 +122,14 @@ input {
 #add-address-button:hover,
 #add-address-button:hover i {
   color: #0062a6;
+}
+
+.error {
+  color: #ff1a1a;
+  text-align: center;
+  margin: 10px auto;
+}
+
+.input-error {
+  border: 2px solid #ff1a1a;
 }
