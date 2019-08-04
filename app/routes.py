@@ -3,8 +3,8 @@ from app import app, db
 from app.models import Address
 from app.forms import AddressForm, LoginForm
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 
 def index():
     form = LoginForm()
