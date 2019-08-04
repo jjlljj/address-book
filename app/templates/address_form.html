@@ -2,41 +2,43 @@
 
 {% block content %}
 
+<section>
 <a href="{{ url_for("address_book") }}" class="nav-link"><i class="fas fa-arrow-left"></i> Back</a>
 
-<div class="address-card" >
-  <h3>{{ form_title }}</h3>
-  <p id="error-text" class="error"></p>
-  <form id="address-form" action="" method="post" novalidate onsubmit="validateAddress(event)">
-    {{ form.hidden_tag() }}
-    <div class="form-row">
-      {{ form.first_name.label }}
-      {{ form.first_name(size=24, maxlength=60, placeholder='First') }}
-    </div>
-    <div class="form-row">
-      {{ form.last_name.label }}
-      {{ form.last_name(size=24, maxlength=60, placeholder='Last') }}
-    </div>
-    <div class="form-row">
-      {{ form.address.label }}
-      {{ form.address(size=24, maxlength=120, placeholder='1701 Wynkoop') }}
-    </div>
-    <div class="form-row">
-      {{ form.city.label }}
-      {{ form.city(size=24, maxlength=60, placeholder='Denver') }}
-    </div>
-    <div class="form-row">
-      {{ form.state.label }}
-      {{ form.state(size=24, maxlength=2, placeholder='CO') }}
-    </div>
-    <div class="form-row">
-      {{ form.zip_code.label }}
-      {{ form.zip_code(size=24, maxlength=20, placeholder='80202') }}
-    </div>
+  <div class="address-card" >
+    <h3>{{ form_title }}</h3>
+    <p id="error-text" class="error"></p>
+    <form id="address-form" action="" method="post" novalidate onsubmit="validateAddress(event)">
+      {{ form.hidden_tag() }}
+      <div class="form-row">
+        {{ form.first_name.label }}
+        {{ form.first_name(size=24, maxlength=60, placeholder='First') }}
+      </div>
+      <div class="form-row">
+        {{ form.last_name.label }}
+        {{ form.last_name(size=24, maxlength=60, placeholder='Last') }}
+      </div>
+      <div class="form-row">
+        {{ form.address.label }}
+        {{ form.address(size=24, maxlength=120, placeholder='1701 Wynkoop') }}
+      </div>
+      <div class="form-row">
+        {{ form.city.label }}
+        {{ form.city(size=24, maxlength=60, placeholder='Denver') }}
+      </div>
+      <div class="form-row">
+        {{ form.state.label }}
+        {{ form.state(size=24, maxlength=2, placeholder='CO') }}
+      </div>
+      <div class="form-row">
+        {{ form.zip_code.label }}
+        {{ form.zip_code(size=24, maxlength=20, placeholder='80202') }}
+      </div>
 
-    <button type="submit" class="submit-button">Save</button>
-  </form>
-</div>
+      <button type="submit" class="submit-button">Save</button>
+    </form>
+  </div>
+</section>
 
 <script type="text/javascript" src="{{ url_for('static', filename = 'js/address_form.js') }}"></script>
 

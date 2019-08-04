@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section>
+  <div class="address-card" >
+    <h3>Sign In</h3>
+    {% if login_error %}
+      <p class="error">{{ login_error }}</p>
+    {% endif %}
+    <form action="" method="post" novalidate>
+      {{ form.hidden_tag() }}
+      <div class="form-row">
+        {{ form.username.label }}
+        {{ form.username(size=32) }}
+      </div>
+      {% for error in form.username.errors %}
+         <p class="error">{{ error }}</p>
+      {% endfor %}
+      <div class="form-row">
+        {{ form.password.label }}<br>
+        {{ form.password(size=32) }}
+      </div>
+      {% for error in form.password.errors %}
+         <p class="error">{{ error }}</p>
+      {% endfor %}
+      <div class="form-row" style="justify-content: flex-start;">
+       {{ form.remember_me() }} {{ form.remember_me.label }}
+      </div>
+      <button type="submit" class="submit-button">Log In</button>
+    </form>
+    <p style="margin-top: 30px;">Don't Have An Account? <a href="{{ url_for('register') }}">Register Here</a></p>
+  </div>
+</section>
+
+{% endblock %}
