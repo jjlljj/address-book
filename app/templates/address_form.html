@@ -11,27 +11,27 @@
     {{ form.hidden_tag() }}
     <div class="form-row">
       {{ form.first_name.label }}
-      {{ form.first_name(size=24) }}
+      {{ form.first_name(size=24, maxlength=60, placeholder='First') }}
     </div>
     <div class="form-row">
       {{ form.last_name.label }}
-      {{ form.last_name(size=24) }}
+      {{ form.last_name(size=24, maxlength=60, placeholder='Last') }}
     </div>
     <div class="form-row">
       {{ form.address.label }}
-      {{ form.address(size=24) }}
+      {{ form.address(size=24, maxlength=120, placeholder='1701 Wynkoop') }}
     </div>
     <div class="form-row">
       {{ form.city.label }}
-      {{ form.city(size=24) }}
+      {{ form.city(size=24, maxlength=60, placeholder='Denver') }}
     </div>
     <div class="form-row">
       {{ form.state.label }}
-      {{ form.state(size=24) }}
+      {{ form.state(size=24, maxlength=2, placeholder='CO') }}
     </div>
     <div class="form-row">
       {{ form.zip_code.label }}
-      {{ form.zip_code(size=24) }}
+      {{ form.zip_code(size=24, maxlength=20, placeholder='80202') }}
     </div>
 
     <button type="submit" class="submit-button">Save</button>
