@@ -120,15 +120,15 @@ input {
   background: #0062a6;
 }
 
-#add-address-button {
+.link-button {
   color: #707077;
   display: block;
-  margin: 20px 10px 10px auto;
+  margin: 20px 10px;
   width: 200px;
 }
 
-#add-address-button:hover,
-#add-address-button:hover i {
+.link-button:hover,
+.link-button:hover i {
   color: #0062a6;
 }
 

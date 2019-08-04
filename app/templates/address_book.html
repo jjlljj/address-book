@@ -3,10 +3,12 @@
 {% block content %}
 
 <section>
+  <div class="form-row">
+    <a href="/logout" class="link-button"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+    <a href="/address_book/new" class="link-button"><i class="fas fa-plus"></i> Add A New Address</a>
+  </div>
+
   <div>
-    <a href="/address_book/new" id="add-address-button"><i class="fas fa-plus"></i> Add A New Address</a>
-
-
     {% for address in addresses %}
       <div class="address-card" id="address-{{ address.id }}">
         <a href="/address_book/edit/{{ address.id }}" class="card-button edit-button"><i class="far fa-edit"></i></a>
