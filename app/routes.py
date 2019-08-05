@@ -5,6 +5,7 @@ from app.forms import AddressForm, LoginForm, RegistrationForm
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
@@ -24,10 +25,12 @@ def login():
         return redirect(next_page)
     return render_template('login_form.html', title='Sign In', form=form)
 
+
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -43,10 +46,11 @@ def register():
         return redirect(url_for('address_book'))
     return render_template('registration_form.html', title='Register', form=form)
 
+
 @app.route('/address_book', methods=['GET'])
 @login_required
 def address_book():
-    addresses = Address.query.filter_by(user_id=current_user.id)
+    addresses = Address.query.filter_by(user_id=current_user.id).order_by(Address.last_name)
     return render_template('address_book.html', addresses=addresses, page_title=current_user.username+"'s Address Book")
 
 
@@ -66,10 +70,10 @@ def add_address():
         )
         db.session.add(address)
         db.session.commit()
-
         return redirect(url_for('address_book'))
 
     return render_template('address_form.html', form=form, form_title='Add A New Address')
+
 
 @app.route('/address_book/edit/<address_id>', methods=['GET', 'POST'])
 @login_required

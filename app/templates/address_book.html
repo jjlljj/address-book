@@ -12,7 +12,7 @@
     {% for address in addresses %}
       <div class="address-card" id="address-{{ address.id }}">
         <a href="/address_book/edit/{{ address.id }}" class="card-button edit-button"><i class="far fa-edit"></i></a>
-        <p>{{address.first_name}} {{ address.last_name }}</p>
+        <p><b>{{ address.last_name }}, {{address.first_name}}</b></p>
         <p>{{address.address}} {{ address.city }}, {{ address.state }}</p>
         <p>{{ address.zip_code }}</p>
         <button type="button" class="card-button delete-button" data-id="{{ address.id }}" onclick="deleteAddress(event)"><i data-id="{{ address.id }}" class="fas fa-trash-alt delete-btn"></i></button>
