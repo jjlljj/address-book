@@ -46,7 +46,6 @@ def register():
 @app.route('/address_book', methods=['GET'])
 @login_required
 def address_book():
-    # addresses = Address.query.all()
     addresses = Address.query.filter_by(user_id=current_user.id)
     return render_template('address_book.html', addresses=addresses, page_title=current_user.username+"'s Address Book")
 
@@ -56,7 +55,6 @@ def address_book():
 def add_address():
     form=AddressForm()
     if form.validate_on_submit():
-
         address = Address(
             first_name = form.first_name.data.title(),
             last_name = form.last_name.data.title(),
@@ -66,7 +64,6 @@ def add_address():
             zip_code = form.zip_code.data,
             user_id = current_user.id
         )
-
         db.session.add(address)
         db.session.commit()
 
@@ -78,8 +75,10 @@ def add_address():
 @login_required
 def edit_address(address_id):
     address = Address.query.get(address_id)
-    form=AddressForm()
+    if not address or address.user_id != current_user.id:
+        return redirect(url_for('address_book'))
 
+    form=AddressForm()
     if form.validate_on_submit():
         address.first_name = form.first_name.data.title()
         address.last_name = form.last_name.data.title()
@@ -89,7 +88,6 @@ def edit_address(address_id):
         address.zip_code = form.zip_code.data 
 
         db.session.commit()
-
         return redirect(url_for('address_book'))
 
     form.first_name.data = address.first_name
@@ -110,6 +108,11 @@ def edit_address(address_id):
 @login_required
 def delete_address(address_id):
     address = Address.query.get(address_id)
+    if not address or address.user_id != current_user.id:
+        return jsonify(
+            deleted=False,
+            success=False
+        )
 
     if request.method == 'DELETE':
         db.session.delete(address)
