@@ -37,6 +37,10 @@ a {
   color: #4581b7;
 }
 
+b {
+  font-weight: 700;
+}
+
 input {
   background: #f2f2f2;
   border-radius: 10px;

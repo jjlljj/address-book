@@ -3,7 +3,9 @@
 {% block content %}
 
 <section>
-<a href="{{ url_for("address_book") }}" class="nav-link"><i class="fas fa-arrow-left"></i> Back</a>
+  <div class="form-row" style="justify-content: flex-start">
+    <a href="{{ url_for("address_book") }}" class="link-button"><i class="fas fa-arrow-left"></i> Back</a>
+  </div>
 
   <div class="address-card" >
     <h3>{{ form_title }}</h3>
