@@ -28,7 +28,7 @@ const validateAddress = async e => {
   }
 
   // need pull apiId into py env variable
-  const apiId = '449SELF06473';
+  const apiId = '';
 
   // build usps api url
   const url = `https://secure.shippingapis.com/shippingapi.dll?API=ZipCodeLookup&XML=<ZipCodeLookupRequest USERID="${apiId}"><Address ID="0"><Address1></Address1><Address2>${addressData['address'].value}</Address2><City>${addressData['city'].value}</City><State>${addressData['state'].value}</State><Zip5>${addressData['zip_code'].value}</Zip5><Zip4></Zip4></Address></ZipCodeLookupRequest>`;
